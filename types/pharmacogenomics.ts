@@ -36,20 +36,16 @@ export interface PharmacogenomicProfile {
 
 export interface ClinicalRecommendation {
   action: string;
-  details?: string;
 
-  // Optional structured dosing change
   dosage_adjustment?: {
+    factor: number;
     direction: "increase" | "decrease";
-    factor: number; // e.g. 0.7 means 30% reduction
     rationale: string;
   };
 
-  // Alternative therapies
   alternative_drugs?: string[];
-
-  // Monitoring advice
   monitoring_recommendations?: string[];
+  contraindications?: string[];
 }
 
 
