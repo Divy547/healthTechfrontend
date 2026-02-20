@@ -2,7 +2,7 @@ import type { DrugRiskReport } from "@/types/pharmacogenomics";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-  console.log("Using API base URL:", API_BASE_URL);
+  console.log("Using API base URL:", process.env.NEXT_PUBLIC_API_URL);
 
 export async function uploadVCFAndAnalyze(
   file: File,
