@@ -17,7 +17,7 @@ export interface Variant {
 
 export interface RiskAssessment {
   risk_label: RiskLabel;
-  confidence_score: number;
+  confidence_score: number; // 0–1 normalized
   severity: Severity;
   reasoning?: string;
 }
@@ -36,7 +36,20 @@ export interface PharmacogenomicProfile {
 
 export interface ClinicalRecommendation {
   action: string;
-  details: string;
+  details?: string;
+
+  // Optional structured dosing change
+  dosage_adjustment?: {
+    direction: "increase" | "decrease";
+    factor: number; // e.g. 0.7 means 30% reduction
+    rationale: string;
+  };
+
+  // Alternative therapies
+  alternative_drugs?: string[];
+
+  // Monitoring advice
+  monitoring_recommendations?: string[];
 }
 
 
@@ -46,12 +59,38 @@ export interface LLMExplanation {
   clinical_implications: string;
   patient_friendly_explanation: string;
   references?: string[];
+
+  // Advanced explainability
+  clinical_reasoning?: string;
+  drug_interaction_mechanism?: string;
+  safety_notes?: string[];
+
+  // AI transparency
+  confidence_explanation?: {
+    confidence_score: number; // 0–1
+    reason?: string;
+  };
 }
 
 
 export interface QualityMetrics {
+  // Core parsing
   vcf_parsing_success: boolean;
-  gene_match_confidence: number;
+  gene_match_confidence?: number;
+
+  // Variant analytics
+  variant_call_quality?: number; // percentage (0–100)
+  coverage_depth?: number; // e.g., 30x
+
+  // Statistical confidence
+  confidence_interval?: {
+    lower: number; // 0–1
+    upper: number; // 0–1
+  };
+
+  // AI / pipeline metadata
+  model_version?: string; // e.g. pharma-llm-v1.2
+  analysis_timestamp?: string; // ISO timestamp
 }
 
 
